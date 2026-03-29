@@ -4,6 +4,7 @@ import 'dart:math' as math;
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -45,6 +46,11 @@ class _VitalsDetailViewState extends State<VitalsDetailView> {
     return Scaffold(
       backgroundColor: const Color(0xFF0B0E11),
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => context.go('/dashboard'),
+          icon: const Icon(Icons.arrow_back_rounded),
+          tooltip: 'Back to dashboard',
+        ),
         title: const Text('Vitals Detail'),
         backgroundColor: Colors.transparent,
         elevation: 0,

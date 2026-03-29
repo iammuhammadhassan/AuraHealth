@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -28,6 +29,15 @@ class DashboardScreen extends StatelessWidget {
               _screenPadding,
               0,
               _screenPadding,
+              20,
+            ),
+            sliver: const SliverToBoxAdapter(child: _QuickActionsRow()),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(
+              _screenPadding,
+              0,
+              _screenPadding,
               _screenPadding,
             ),
             sliver: SliverGrid(
@@ -41,10 +51,88 @@ class DashboardScreen extends StatelessWidget {
                 _VitalRingTile(metric: _VitalMetric.sleep),
                 _VitalRingTile(metric: _VitalMetric.heartRate),
                 _VitalRingTile(metric: _VitalMetric.activity),
+                _LogoutTile(),
               ]),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _QuickActionsRow extends StatelessWidget {
+  const _QuickActionsRow();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: _NavActionButton(
+            label: 'AI Doctor Chat',
+            icon: LucideIcons.sparkles,
+            onTap: () => context.push('/chat'),
+          ),
+        ),
+        const SizedBox(width: 14),
+        Expanded(
+          child: _NavActionButton(
+            label: 'Vitals Detail',
+            icon: LucideIcons.activity,
+            onTap: () => context.push('/vitals'),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _NavActionButton extends StatelessWidget {
+  const _NavActionButton({
+    required this.label,
+    required this.icon,
+    required this.onTap,
+  });
+
+  final String label;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(18),
+      child: Ink(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(18),
+          color: Colors.white.withOpacity(0.05),
+          border: Border.all(color: const Color(0xFF00F2FF).withOpacity(0.24)),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFF00F2FF).withOpacity(0.16),
+              blurRadius: 12,
+              spreadRadius: -5,
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Icon(icon, size: 18, color: const Color(0xFF8AFBFF)),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                label,
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -57,18 +145,32 @@ class _DashboardHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       pinned: true,
-      expandedHeight: 190,
+      expandedHeight: 132,
+      toolbarHeight: 64,
       backgroundColor: Colors.black.withOpacity(0.2),
       surfaceTintColor: Colors.transparent,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: false,
-        titlePadding: const EdgeInsetsDirectional.only(start: 20, bottom: 16),
-        title: Text(
-          'Aura Dashboard',
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
-          ),
+        titlePadding: const EdgeInsetsDirectional.only(start: 20, bottom: 12),
+        title: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'AuraHealth',
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w800,
+                color: Colors.white,
+              ),
+            ),
+            Text(
+              'Your wellness command center',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Colors.white.withOpacity(0.78),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
         ),
         background: Stack(
           fit: StackFit.expand,
@@ -313,6 +415,71 @@ class _VitalRingTile extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LogoutTile extends StatelessWidget {
+  const _LogoutTile();
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Logout action tapped')));
+      },
+      borderRadius: BorderRadius.circular(24),
+      child: Ink(
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.04),
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(
+            color: const Color(0xFFFF6B81).withOpacity(0.28),
+            width: 1,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 62,
+                height: 62,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: const Color(0xFFFF6B81).withOpacity(0.12),
+                  border: Border.all(
+                    color: const Color(0xFFFF6B81).withOpacity(0.5),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFFFF6B81).withOpacity(0.35),
+                      blurRadius: 16,
+                      spreadRadius: -6,
+                    ),
+                  ],
+                ),
+                child: const Icon(
+                  LucideIcons.logOut,
+                  color: Color(0xFFFF9AA9),
+                  size: 24,
+                ),
+              ),
+              const SizedBox(height: 14),
+              Text(
+                'Log Out',
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

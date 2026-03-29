@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import 'chat_state.dart';
@@ -37,6 +38,7 @@ class _NeuralChatScreenState extends ConsumerState<NeuralChatScreen> {
       body: SafeArea(
         child: Column(
           children: [
+            const _ChatTopBar(),
             const _EmergencyDisclaimerBanner(),
             Expanded(
               child: ListView.builder(
@@ -93,6 +95,35 @@ class _NeuralChatScreenState extends ConsumerState<NeuralChatScreen> {
         curve: Curves.easeOut,
       );
     });
+  }
+}
+
+class _ChatTopBar extends StatelessWidget {
+  const _ChatTopBar();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+      child: Row(
+        children: [
+          IconButton(
+            onPressed: () => context.go('/dashboard'),
+            icon: const Icon(Icons.arrow_back_rounded),
+            color: Colors.white,
+            tooltip: 'Back to dashboard',
+          ),
+          const SizedBox(width: 4),
+          Text(
+            'AI Doctor Chat',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

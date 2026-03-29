@@ -10,11 +10,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:aura_health/main.dart';
 
 void main() {
-  testWidgets('Vitals preview smoke test', (WidgetTester tester) async {
+  testWidgets('Dashboard navigation smoke test', (WidgetTester tester) async {
     await tester.pumpWidget(const AuraHealthApp());
     await tester.pumpAndSettle();
 
+    expect(find.text('Aura Dashboard'), findsOneWidget);
+    expect(find.text('AI Doctor Chat'), findsOneWidget);
     expect(find.text('Vitals Detail'), findsOneWidget);
-    expect(find.text('Risk Assessment'), findsOneWidget);
   });
 }
