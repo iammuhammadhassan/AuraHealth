@@ -10,10 +10,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:aura_health/main.dart';
 
 void main() {
-  testWidgets('Neural chat preview smoke test', (WidgetTester tester) async {
+  testWidgets('Vitals preview smoke test', (WidgetTester tester) async {
     await tester.pumpWidget(const AuraHealthApp());
+    await tester.pumpAndSettle();
 
-    expect(find.textContaining('Emergency Disclaimer:'), findsOneWidget);
-    expect(find.text('Ask Aura AI...'), findsOneWidget);
+    expect(find.text('Vitals Detail'), findsOneWidget);
+    expect(find.text('Risk Assessment'), findsOneWidget);
   });
 }
