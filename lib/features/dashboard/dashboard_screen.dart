@@ -427,11 +427,7 @@ class _LogoutTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('Logout action tapped')));
-      },
+      onTap: () => context.go('/login'),
       borderRadius: BorderRadius.circular(24),
       child: Ink(
         decoration: BoxDecoration(

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'core/theme/theme.dart';
+import 'features/auth/login_screen.dart';
 import 'features/dashboard/dashboard_screen.dart';
 import 'features/chat/neural_chat_screen.dart';
 import 'features/vitals/vitals_detail_view.dart';
@@ -17,8 +18,9 @@ class AuraHealthApp extends StatelessWidget {
   const AuraHealthApp({super.key});
 
   static final GoRouter _router = GoRouter(
-    initialLocation: '/dashboard',
+    initialLocation: '/login',
     routes: [
+      GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
       GoRoute(
         path: '/dashboard',
         builder: (context, state) => const DashboardScreen(),
