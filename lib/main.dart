@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/theme/theme.dart';
-import 'features/dashboard/dashboard_screen.dart';
+import 'features/chat/neural_chat_screen.dart';
 
 void main() {
   runApp(const AuraHealthApp());
@@ -12,11 +13,13 @@ class AuraHealthApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'AuraHealth',
-      debugShowCheckedModeBanner: false,
-      theme: DarkGlassTheme.theme,
-      home: const DashboardScreen(),
+    return ProviderScope(
+      child: MaterialApp(
+        title: 'AuraHealth',
+        debugShowCheckedModeBanner: false,
+        theme: DarkGlassTheme.theme,
+        home: const NeuralChatScreen(),
+      ),
     );
   }
 }
