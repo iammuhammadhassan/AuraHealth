@@ -80,21 +80,33 @@ class _NeuralChatScreenState extends ConsumerState<NeuralChatScreen> {
     );
   }
 
-  void _sendMessage() {
+  void _sendMessage() async {
     final text = _controller.text;
-    ref.read(chatStateProvider.notifier).sendUserMessage(text);
     _controller.clear();
 
+    // Scroll immediately after clearing input
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!_scrollController.hasClients) {
-        return;
-      }
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent + 120,
-        duration: const Duration(milliseconds: 260),
-        curve: Curves.easeOut,
-      );
+      _scrollToBottom();
     });
+
+    // Send message to AI (async operation)
+    await ref.read(chatStateProvider.notifier).sendUserMessage(text);
+
+    // Scroll again after AI responds
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToBottom();
+    });
+  }
+
+  void _scrollToBottom() {
+    if (!_scrollController.hasClients) {
+      return;
+    }
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent + 120,
+      duration: const Duration(milliseconds: 260),
+      curve: Curves.easeOut,
+    );
   }
 }
 

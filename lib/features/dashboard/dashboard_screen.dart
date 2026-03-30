@@ -156,15 +156,27 @@ class _DashboardHeader extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'AuraHealth',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w800,
-                color: Colors.white,
-              ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  LucideIcons.heartPulse,
+                  size: 28,
+                  color: const Color(0xFF86FBFF),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  'AuraHealth',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
+        
             Text(
-              'Your wellness command center',
+              '          Your wellness command center',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: Colors.white.withOpacity(0.78),
                 fontWeight: FontWeight.w500,
